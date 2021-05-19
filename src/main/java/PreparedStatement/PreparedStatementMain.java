@@ -20,7 +20,7 @@ public class PreparedStatementMain {
     static Connection connection;
 
     public static void main(String[] args) {
-        // соединение с БД
+        // строка с соединением с БД
         String url = "jdbc:postgresql://" + HOST + "/" + DATABASENAME + "?user=" + USERNAME + "&password=" + PASSWORD;
         try {
             // соединение с БД
