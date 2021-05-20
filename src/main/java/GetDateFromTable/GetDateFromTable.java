@@ -34,7 +34,7 @@ public class GetDateFromTable {
                 //result указывает на первую строку с выборки
                 //чтобы вывести данные используем метод next(),
                 // с помощью которого переходим к следующему элементу
-                ResultSet resultSet = statement.getResultSet();
+                ResultSet resultSet = statement.executeQuery(sql);
 
                 // в цикле выводим все данные из таблицы
                 while (resultSet.next()) {
