@@ -1,7 +1,8 @@
 package PreparedStatement;
 
 /*
-Проверка нахождения в таблице искомого числа, введенного в консоль
+Проверка нахождения в таблице искомого числа, введенного в консоль,
+добавление нового числа
  */
 
 import java.sql.*;
@@ -31,10 +32,16 @@ public class PreparedStatementMain {
                 System.out.println("Соединение с БД установлено");
 
             // поиск числа в таблице
-            if (checkvalue(new Scanner(System.in).nextInt()))
+            if (checkValue(new Scanner(System.in).nextInt()))
                 System.out.println("Число есть в таблице");
             else
                 System.out.println("Число отсутствует в таблице");
+
+            // добавление числа в таблицу
+            if (insertValue(new Scanner(System.in).nextInt()))
+                System.out.println("Число успешно добавлено в таблицу");
+            else
+                System.out.println("Число не добавлено в таблицу");
 
             connection.close();
         } catch (SQLException throwables) {
@@ -43,10 +50,10 @@ public class PreparedStatementMain {
     }
 
     // метод, выполняющий поиск необходимого числа в таблице
-    public static boolean checkvalue(int checkedValue) {
+    public static boolean checkValue(int checkedValue) {
         String sql = "Select * from test2 where ID = ?;";
-        try (PreparedStatement statement = connection.prepareStatement(sql) ) {
-            statement.setInt(1,checkedValue);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, checkedValue);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 return true;
@@ -56,4 +63,24 @@ public class PreparedStatementMain {
         }
         return false;
     }
+
+    // метод, выполняющий добавление числа в таблицу
+    public static boolean insertValue(int insertedValue) {
+        String sql = "insert into test2(id) values (?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // устанавливаем в нужную позицию (на места знаков ?) значения нужного типа
+            preparedStatement.setInt(1, insertedValue);
+            // выполняем запрос
+            int rows = preparedStatement.executeUpdate();
+            // проверяем, добавилась ли строка
+            if (rows >= 1)
+                return true;
+            else
+                return false;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
 }

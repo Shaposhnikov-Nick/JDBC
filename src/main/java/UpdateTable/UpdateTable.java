@@ -28,10 +28,11 @@ public class UpdateTable {
                 System.out.println("Не удалось подключиться к БД " + DATABASENAME);
             else
                 System.out.println("Соединение с БД " + DATABASENAME + " установлено");
-            // добавление столбца dayOfBirth
-            String sql = "Alter table test2 add column dayOfBirth date";
-            try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // добавление столбца dayOfBirth тип varchar
+            String sql = "Alter table test2 add column dayOfBirth varchar";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.executeUpdate();
+                System.out.println("Столбец успешно создан");
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

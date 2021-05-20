@@ -48,6 +48,7 @@ public class Main {
             int count = 2;
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql2)) {
+                // устанавливаем в нужную позицию (на места знаков ?) значения нужного типа
                 preparedStatement.setInt(1, count);
 
                 // ResultSet executeQuery(String SQL), возвращает объект ResultSet и используется для получения
@@ -82,7 +83,7 @@ public class Main {
             Так же как и в preparedStatement с помощью маркеров мы можем определить операторы,
             но есть и отличие — мы можем использовать не только порядковое местоположение, но и указание по имени.
              */
-            String sql4 = "Insert into users (id, name) Values (?, ?)";
+            String sql4 = "Insert into users (id, name) Values (?, ?)"; // здесь должна быть функция из БД
             // Создаем подключение
             try (CallableStatement callableStatement = connection.prepareCall(sql4)) {
                 // Добавляем 2 значения
@@ -92,7 +93,7 @@ public class Main {
                 callableStatement.executeUpdate();
             }
 
-            // обязательно закрываем запросы
+            // обязательно закрываем запросы через метод close(), если не использовался try-with-resource
 
         } catch (SQLException throwables) {
             // при ошибке подключения к БД выводим:
